@@ -1,0 +1,11 @@
+#footer {
+    background-color: #e0e7ed;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #65686f;
+    padding: 5px 0 5px 0;
+    text-align: center;
+    font-family: Arial, SansSerif;
+    font-style: italic;
+}
