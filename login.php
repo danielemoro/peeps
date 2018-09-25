@@ -11,9 +11,9 @@
         <h1> Log In </h1>
         <form method="post" action="index.php">
                 <h2> Username </h2>
-                <input type="text" name="name" class="formInput">
+                <input type="text" name="username" class="formInput">
                 <h2> Password </h2>
-                <input type="text" name="comment" class="formInput">
+                <input type="text" name="password" class="formInput">
           <input type="submit" value="Submit" class="formButton">
         </form>
 

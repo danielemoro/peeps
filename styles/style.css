@@ -36,12 +36,15 @@ p{
 }
 
 button {
-    width: 100px;
+    width: 200px;
     height: 50px;
     margin: 10px;
     background-color: #ffffff;
     color: #6857f2;
     border-color:  #6857f2;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: Roboto;
 }
 
 .buttonHot {
@@ -69,4 +72,7 @@ button {
     background-color: #6857f2;
     color: #ffffff;
     border: solid #46379c 2px;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: Roboto;
 }
