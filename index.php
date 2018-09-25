@@ -12,7 +12,7 @@
     </header>
     <body>
         <?php include_once("header.html"); ?>
-        <h1> <img src="media/logo" id="logoTitle">Peeps</h1>
+        <h1> <img src="media/logo.png" id="logoTitle">Peeps</h1>
         <h4> Have you ever forgotten someone's name or other information? Look no further </h4>
         <p> Every day we meet many people and we re-encounter others we have met before. However, many people have
         difficulty remembering a person’s name, occupation, school, and other attributes. Many of us sometimes find
