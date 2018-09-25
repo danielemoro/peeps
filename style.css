@@ -1,0 +1,53 @@
+body {
+    margin: 0px;
+}
+
+#header {
+    background-color: #e0e7ed;
+    margin: 0px;
+}
+
+#logo {
+    width: 50px;
+    height: 50px;
+    display: inline;
+    float: left;
+    margin-left: 10px;
+}
+
+#buttonList > li{
+    display: inline;
+}
+
+#buttonList{
+    display: inline-block;
+    padding-inline-start: 10px;
+}
+
+.headerButton{
+    display: inline;
+    width: 100px;
+    height: 50px;
+    background-color: #d2cdfb;
+    font-family: Roboto, SansSerif;
+    color: white;
+    padding: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.headerButtonHot {
+    background-color: #6857f2;
+}
+
+#loginButton {
+    display: inline;
+    float: right;
+    width: 100px;
+    height: 20px;
+    background-color: #f7f6ff;
+    color: #6857f2;
+    font-family: Roboto, SansSerif;
+    padding: 15px 5px 16px 5px;
+    text-align: center;
+}
