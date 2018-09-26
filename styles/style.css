@@ -53,6 +53,12 @@ button {
     border: solid #46379c 2px;
 }
 
+.scrollContainer {
+    width: 80%;
+    display: block;
+    background-color: #6857f2;
+}
+
 .formInput {
     display: block;
     margin-left: auto;
