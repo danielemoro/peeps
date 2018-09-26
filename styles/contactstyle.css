@@ -1,0 +1,51 @@
+.contactCard {
+    font-family: Roboto;
+    font-size: 1em;
+    color: #798896;
+    padding: 10px;
+    background-color: #e0e7ed;
+    width: fit-content;
+    border: #798896 solid 2px ;
+    text-align: left;
+    margin: 20px;
+}
+
+.contactCard > table  {
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 10px;
+    position: relative;
+    left: -10px;
+}
+
+.contactCard > b  {
+    color: #450002;
+    font-family: Arial, SansSerif;
+    font-size: large;
+    font-style: normal;
+}
+
+.contactCard > table, th, td {
+    padding: 5px 10px 5px 10px;
+}
+
+.contactCard > th {
+    border-right: 1px solid #798896;
+    font-family: Arial, SansSerif;
+    font-weight: normal;
+}
+
+.contactListItem {
+    list-style-type: none;
+}
+
+.contactListItem > .contactDate{
+    float: right;
+    position: relative;
+    top: -110px;
+    left: -50px;
+    font-style: italic;
+    font-family: Roboto;
+    width: 200px;
+    text-align: center;
+}
