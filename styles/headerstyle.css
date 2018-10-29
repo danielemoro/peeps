@@ -36,14 +36,17 @@
     background-color: #6857f2;
 }
 
+#buttonList a {
+  text-decoration: none;
+}
+
 #loginButton {
     display: inline;
     float: right;
-    width: 100px;
     height: 20px;
     background-color: #f7f6ff;
     color: #6857f2;
     font-family: Roboto, SansSerif;
-    padding: 15px 5px 16px 5px;
+    padding: 15px 30px 16px 30px;
     text-align: center;
 }

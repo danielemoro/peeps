@@ -1,9 +1,0 @@
-<div id="header">
-    <img src="../media/logo.png" id="logo" onclick="location.href='index.php'">
-    <ul id="buttonList">
-        <li class= <?php if($_SERVER['REQUEST_URI'] == '/index.php' || $_SERVER['REQUEST_URI'] == '/') { echo "'headerButton headerButtonHot'"; } else {echo "'headerButton'";} ?> onclick="location.href='index.php'"> About </li>
-        <li class= <?php if($_SERVER['REQUEST_URI'] == '/chat.php') { echo "'headerButton headerButtonHot'"; } else {echo "'headerButton'";} ?> onclick="location.href='chat.php'"> Chat </li>
-        <li class= <?php if($_SERVER['REQUEST_URI'] == '/contacts.php') { echo "'headerButton headerButtonHot'"; } else {echo "'headerButton'";} ?> onclick="location.href='contacts.php'"> Contacts </li>
-    </ul>
-    <div id="loginButton" onclick="location.href='login.php'"> Log In </div>
-</div>

@@ -6,7 +6,7 @@
         <link href="styles/headerstyle.css" type="text/css" rel="stylesheet" />
     </header>
     <body>
-        <?php include_once("templates/header.html"); ?>
+        <?php include_once("templates/header.php"); ?>
 
         <div class="scrollContainer">
             <h1> <img src="media/logo.png" id="logoTitle">Peeps</h1>
@@ -22,6 +22,6 @@
             </div>
         </div>
 
-        <?php include_once("templates/footer.html"); ?>
+        <?php include_once("templates/footer.php"); ?>
     </body>
 </html>

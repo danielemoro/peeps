@@ -8,7 +8,7 @@
         <link href="styles/headerstyle.css" type="text/css" rel="stylesheet" />
     </header>
     <body>
-        <?php include_once("templates/header.html"); ?>
+        <?php include_once("templates/header.php"); ?>
 
         <div id="chatFlow">
             <ul id="messageList">
@@ -68,6 +68,6 @@
           <input type="submit" value="Submit" class="userTextSubmit">
         </form>
 
-        <?php include_once("templates/footer.html"); ?>
+        <?php include_once("templates/footer.php"); ?>
     </body>
 </html>
