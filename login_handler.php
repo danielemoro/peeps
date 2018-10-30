@@ -23,7 +23,8 @@ if (!$id) {
   exit;
 } else {
   $_SESSION['logged_in'] = true;
-  $_SESSION['user'] = $username;
+  $_SESSION['username'] = $username;
+  $_SESSION['userid'] = $id;
   header('Location: ./chat.php');
   exit;
 }

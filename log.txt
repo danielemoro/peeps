@@ -1,0 +1,18 @@
+now - FATAL --> exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user 'ba6b95c5bb543d'@'ec2-35-173-247-111.compute-1.amazonaws.com' (using password: YES)' in D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php:20
+Stack trace:
+#0 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php(20): PDO->__construct('mysql:host=us-c...', 'ba6b95c5bb543d', '489ef638-')
+#1 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php(47): Dao->getConnection()
+#2 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\signup_handler.php(34): Dao->addUser('a', 'a')
+#3 {main} 
+now - FATAL --> exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user 'ba6b95c5bb543d'@'ec2-54-165-50-141.compute-1.amazonaws.com' (using password: YES)' in D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php:20
+Stack trace:
+#0 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php(20): PDO->__construct('mysql:host=us-c...', 'ba6b95c5bb543d', '489ef638-')
+#1 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php(49): Dao->getConnection()
+#2 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\signup_handler.php(34): Dao->addUser('a', 'a')
+#3 {main} 
+now - FATAL --> exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user 'ba6b95c5bb543d'@'ec2-54-165-50-141.compute-1.amazonaws.com' (using password: YES)' in D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php:20
+Stack trace:
+#0 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php(20): PDO->__construct('mysql:host=us-c...', 'ba6b95c5bb543d', '489ef638-')
+#1 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php(32): Dao->getConnection()
+#2 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\login_handler.php(16): Dao->getUserId('a', '')
+#3 {main} 

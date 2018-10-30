@@ -63,8 +63,8 @@
                 <li class="message space"></li>
             </ul>
         </div>
-        <form method="post" class="userInput">
-                <input type="text" name="userInput" class="userTextInput" value="Type your message here">
+        <form method="post" class="userInput" action="chat_handler.php">
+                <input type="text" name="userInput" class="userTextInput" placeholder="Type your message here">
           <input type="submit" value="Submit" class="userTextSubmit">
         </form>
 
