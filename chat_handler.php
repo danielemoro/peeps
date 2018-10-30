@@ -25,8 +25,6 @@ foreach($values as &$v) {
 //user_id
 $userid = $_SESSION['userid'];
 
-echo $contact . '<br>' . print_r($keys, 1) . '<br>' . print_r($values, 1) ;
-
 // check if correct
 if (sizeof($keys) != sizeof($values)){
   $_SESSION['error_message'] = "Parsing error. Try again";

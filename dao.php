@@ -129,6 +129,26 @@ class Dao {
       $q->execute();
   }
 
+  public function getContactInfo($contact_id){
+    try {
+      $conn = $this->getConnection();
+      $getQuery = "SELECT contact_name, attr, value
+                  FROM attributes a JOIN contacts c ON a.contact_id=c.contact_id
+                  where a.contact_id=:contact_id";
+      $q = $conn->prepare($getQuery);
+      $q->bindParam(":contact_id", $contact_id);
+      $q->execute();
+      $result = $q->fetchAll();
+      return $result;
+
+     } catch(PDOException $e) {
+       switch($e->getCode()){
+         default:
+           return "Database error. Try again";
+       }
+     }
+  }
+
   // public function getContactsWith($keys, $values) {
   //   for($keys as $k)
   //   $conn = $this->getConnection();
@@ -149,5 +169,45 @@ class Dao {
   //     return False;
   //   }
   // }
+
+  public function addMessage($userid, $from_user, $message){
+    try {
+      $this->log->LogDebug("Adding new message '$message' from $from_user");
+      $conn = $this->getConnection();
+       $saveQuery =
+           "INSERT INTO messages (user, from_user, message)
+           VALUES (:user, :from_user, :message)";
+       $q = $conn->prepare($saveQuery);
+       $q->bindParam(":user", $userid);
+       $q->bindParam(":from_user", $from_user);
+       $q->bindParam(":message", $message);
+       $q->execute();
+       return 'DONE';
+
+     } catch(PDOException $e) {
+       switch($e->getCode()){
+         default:
+           return "Database error. Try again";
+       }
+     }
+  }
+
+  public function getMessages($userid){
+    try {
+      $conn = $this->getConnection();
+      $getQuery = "SELECT from_user, message FROM messages WHERE user=:user";
+      $q = $conn->prepare($getQuery);
+      $q->bindParam(":user", $userid);
+      $q->execute();
+      $result = $q->fetchAll();
+      return $result;
+
+     } catch(PDOException $e) {
+       switch($e->getCode()){
+         default:
+           return "Database error. Try again";
+       }
+     }
+  }
 
 }

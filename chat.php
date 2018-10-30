@@ -11,55 +11,29 @@
         <?php include_once("templates/header.php"); ?>
 
         <div id="chatFlow">
+            <?php
+            //make calls to dao
+            require_once 'dao.php';
+            require_once 'contact_card.php';
+            $dao = new Dao();
+            $userid = 1; // TODO $_SESSION['userid'];
+            $messages = $dao->getMessages($userid);
+             ?>
+
             <ul id="messageList">
-                <li class="message">
-                    Yesterday I met @John Smith #at Five Guys #school Boise State #passion Web Dev </li>
-                <li class="message response" >
-                    Got it! Adding @John Smith
-                </li>
-                <li class="chatContactCard">
-                    <div class="contactCard">
-                        <b> John Smith </b>
-                        <table>
-                            <tr> <th>#at</th> <td>Five Guys</td> </tr>
-                            <tr> <th>#school</th> <td>Boise State</td> </tr>
-                            <tr> <th>#passion</th> <td>Web Dev</td> </tr>
-                        </table>
-                    </div>
-                </li>
-                <li class="message">
-                    Who did I meet #at Julia Davis? </li>
-                <li class="message response">
-                    You met @John, @Bob, and @Martha at Julia Davis </li>
-                <li class="message">
-                    @Casey #likes French Butter </li>
-                <li class="message response">
-                    Got it! I added #likes French Butter to @Casey
-                </li>
-                <li class="chatContactCard">
-                    <div class="contactCard">
-                        <b> Casey Kennington </b>
-                        <table>
-                            <tr> <th>#works</th> <td>Boise State</td> </tr>
-                            <tr> <th>#likes</th> <td>French Butter</td> </tr>
-                        </table>
-                    </div>
-                </li>
-                <li class="message">
-                    @Malik #grader Web Dev </li>
-                <li class="message response">
-                    Got it! I added #grader Web Dev to @Malik
-
-                </li>
-                <li class="chatContactCard">
-                    <div class="contactCard">
-                        <b> Malik </b>
-                        <table>
-                            <tr> <th>#grader</th> <td>Web Dev</td> </tr>
-                        </table>
-                    </div>
-                </li>
-
+                <?php
+                foreach($messages as $m){
+                  $response = $m['from_user'] == 1 ? '' : 'response';
+                  if($m['from_user'] == 0 and is_numeric($m['message'])){
+                    $card = new ContactCard(41);
+                    echo $card->drawCard();
+                  } else {
+                    echo "<li class=\"message {$response}\">";
+                    echo $m['message'];
+                    echo '</li>';
+                  }
+                }
+                ?>
                 <li class="message space"></li>
             </ul>
         </div>
