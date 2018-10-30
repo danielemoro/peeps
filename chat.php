@@ -16,16 +16,17 @@
             require_once 'dao.php';
             require_once 'contact_card.php';
             $dao = new Dao();
-            $userid = 1; // TODO $_SESSION['userid'];
+            $userid = $_SESSION['userid'];
             $messages = $dao->getMessages($userid);
              ?>
 
             <ul id="messageList">
+                <h2> ... </h2> 
                 <?php
                 foreach($messages as $m){
                   $response = $m['from_user'] == 1 ? '' : 'response';
                   if($m['from_user'] == 0 and is_numeric($m['message'])){
-                    $card = new ContactCard(41);
+                    $card = new ContactCard($m['message']);
                     echo $card->drawCard();
                   } else {
                     echo "<li class=\"message {$response}\">";
@@ -34,7 +35,7 @@
                   }
                 }
                 ?>
-                <li class="message space"></li>
+                <li class="message space"> <a name="bottom"></a> </li>
             </ul>
         </div>
         <form method="post" class="userInput" action="chat_handler.php">

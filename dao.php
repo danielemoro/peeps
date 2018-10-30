@@ -127,10 +127,11 @@ class Dao {
       $q->bindParam(":key", $key);
       $q->bindParam(":value", $attribute);
       $q->execute();
+
+      return $contact_id;
   }
 
   public function getContactInfo($contact_id){
-    try {
       $conn = $this->getConnection();
       $getQuery = "SELECT contact_name, attr, value
                   FROM attributes a JOIN contacts c ON a.contact_id=c.contact_id
@@ -140,13 +141,6 @@ class Dao {
       $q->execute();
       $result = $q->fetchAll();
       return $result;
-
-     } catch(PDOException $e) {
-       switch($e->getCode()){
-         default:
-           return "Database error. Try again";
-       }
-     }
   }
 
   // public function getContactsWith($keys, $values) {
@@ -171,7 +165,6 @@ class Dao {
   // }
 
   public function addMessage($userid, $from_user, $message){
-    try {
       $this->log->LogDebug("Adding new message '$message' from $from_user");
       $conn = $this->getConnection();
        $saveQuery =
@@ -183,31 +176,16 @@ class Dao {
        $q->bindParam(":message", $message);
        $q->execute();
        return 'DONE';
-
-     } catch(PDOException $e) {
-       switch($e->getCode()){
-         default:
-           return "Database error. Try again";
-       }
-     }
   }
 
   public function getMessages($userid){
-    try {
       $conn = $this->getConnection();
-      $getQuery = "SELECT from_user, message FROM messages WHERE user=:user";
+      $getQuery = "SELECT from_user, message FROM messages WHERE user=:user ORDER By id DESC LIMIT 20";
       $q = $conn->prepare($getQuery);
       $q->bindParam(":user", $userid);
       $q->execute();
       $result = $q->fetchAll();
-      return $result;
-
-     } catch(PDOException $e) {
-       switch($e->getCode()){
-         default:
-           return "Database error. Try again";
-       }
-     }
+      return array_reverse($result);
   }
 
 }

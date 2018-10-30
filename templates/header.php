@@ -10,7 +10,7 @@
         </a>
 
         <?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in']) { ?>
-          <a href='chat.php'>
+          <a href='chat.php#bottom'>
             <li class= <?php if($_SERVER['REQUEST_URI'] == '/chat.php')
                               { echo "'headerButton headerButtonHot'"; }
                               else {echo "'headerButton'";} ?> > Chat </li>
@@ -26,7 +26,7 @@
 
     <?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in']) { ?>
       <a href='logout_handler.php'>
-        <div id="loginButton"> Welcome <?php echo $_SESSION['user']; ?>! <u>Sign Out</u> </div>
+        <div id="loginButton"> Welcome <?php echo $_SESSION['username']; ?>! <u>Sign Out</u> </div>
       </a>
     <?php } else { ?>
       <a href='login.php'>

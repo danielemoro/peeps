@@ -1,6 +1,7 @@
 <?php
 session_start();
-$userinput = $_POST['userInput'];
+$raw_userinput = $_POST['userInput'];
+$userinput = $raw_userinput;
 
 # set presets
 $_SESSION['presets']['userInput'] = $userinput;
@@ -34,12 +35,22 @@ if (sizeof($keys) != sizeof($values)){
 //make calls to dao
 require_once 'dao.php';
 $dao = new Dao();
+$contact_id = '';
 for ($i = 0; $i < sizeof($keys); $i++) {
     echo "<br>addContactInfo($userid, $contact, {$keys[$i]}, {$values[$i]})";
-    $dao->addContactInfo($userid, $contact, $keys[$i], $values[$i]);
+    $contact_id = $dao->addContactInfo($userid, $contact, $keys[$i], $values[$i]);
 }
 
-header('Location: ./chat.php'); exit;
+// manage messages
+// add user's message
+$dao->addMessage($userid, 1, $raw_userinput);
+
+//add bot response
+$bot_response = "Got it! Added that information";
+$dao->addMessage($userid, 0, $bot_response);
+$dao->addMessage($userid, 0, $contact_id);
+
+header('Location: ./chat.php#bottom'); exit;
 
 // #check if worked
 // if ($r != 'DONE') {

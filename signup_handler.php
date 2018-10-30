@@ -42,7 +42,7 @@ if ($r != 'DONE') {
 } else {
   $_SESSION['logged_in'] = true;
   $_SESSION['username'] = $username;
-  $_SESSION['userid'] = $id;
-  header('Location: ./chat.php');
+  $_SESSION['userid'] = $dao->getUserId($username, $password);
+  header('Location: ./chat.php#bottom');
   exit;
 }
