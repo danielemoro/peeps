@@ -35,6 +35,15 @@ class Dao {
     return $conn;
   }
 
+  public function setTimezone(){
+    $timezone = 'America/Denver';
+    $conn = $this->getConnection();
+    $saveQuery = "SET time_zone = :timezone;";
+    $q = $conn->prepare($saveQuery);
+    $q->bindParam(":timezone", $timezone);
+    $q->execute();
+  }
+
   public function getUserId ($username, $password) {
     $this->log->LogDebug("Getting user id for $username");
     $conn = $this->getConnection();
@@ -93,12 +102,18 @@ class Dao {
 
   public function createContact($userid, $contact) {
     $conn = $this->getConnection();
+    date_default_timezone_set('America/Denver');
+    $timestamp = date('Y-m-d H:i:s');
+
+    $this->setTimezone();
     $saveQuery =
-       "INSERT INTO contacts (owner, contact_name)
-       VALUES (:owner, :contact);";
+       "SET time_zone = 'America/Denver';
+       INSERT INTO contacts (owner, contact_name, date_added)
+       VALUES (:owner, :contact, :added);";
     $q = $conn->prepare($saveQuery);
     $q->bindParam(":owner", $userid);
     $q->bindParam(":contact", $contact);
+    $q->bindParam(":added", $timestamp);
     $q->execute();
   }
 
@@ -131,11 +146,21 @@ class Dao {
       return $contact_id;
   }
 
+  public function getContacts($userid){
+    $conn = $this->getConnection();
+    $getQuery = "SELECT contact_id FROM contacts WHERE owner=:userid";
+    $q = $conn->prepare($getQuery);
+    $q->bindParam(":userid", $userid);
+    $q->execute();
+    $result = $q->fetchAll();
+    return $result;
+  }
+
   public function getContactInfo($contact_id){
       $conn = $this->getConnection();
-      $getQuery = "SELECT contact_name, attr, value
-                  FROM attributes a JOIN contacts c ON a.contact_id=c.contact_id
-                  where a.contact_id=:contact_id";
+      $getQuery = "SELECT contact_name, attr, value, DATE_FORMAT(c.date_added,
+        \"Added %b %D, %Y <br> at %h:%i %p\") FROM attributes a JOIN contacts c
+        ON a.contact_id=c.contact_id where a.contact_id=:contact_id";
       $q = $conn->prepare($getQuery);
       $q->bindParam(":contact_id", $contact_id);
       $q->execute();
@@ -143,26 +168,45 @@ class Dao {
       return $result;
   }
 
-  // public function getContactsWith($keys, $values) {
-  //   for($keys as $k)
-  //   $conn = $this->getConnection();
-  //   $getQuery = "SELECT DISTINCT c.contact_id FROM
-  //               attributes a JOIN contacts c ON a.contact_id=c.contact_id
-  //               where"; // attr='color' and value='red';
-  //
-  //   // TODO finish this
-  //
-  //   $q = $conn->prepare($getQuery);
-  //   $q->bindParam(":owner", $userid);
-  //   $q->bindParam(":contact", $contact);
-  //   $q->execute();
-  //   $result = $q->fetchAll();
-  //   if (isset($result[0][0])) {
-  //    return $result[0][0];
-  //   } else {
-  //     return False;
-  //   }
-  // }
+  public function getContactsWith($userid, $contacts, $keys, $values) {
+    $conn = $this->getConnection();
+    $getQuery = "SELECT DISTINCT c.contact_id FROM attributes a
+    JOIN contacts c ON a.contact_id=c.contact_id where ";
+
+    // add the contact ids first
+    foreach ($contacts as $c){
+      $getQuery .= "c.contact_name = :$c and ";
+    }
+    // add the keys
+    foreach ($keys as $k){
+      $getQuery .= "a.attr = :$k and ";
+    }
+    // add the values
+    foreach ($values as $v){
+      $vi = explode(" ", $v)[0];
+      $getQuery .= "a.value = :$vi and ";
+    }
+    //remove the last and
+    $getQuery = substr($getQuery, 0, -5);
+    echo print_r($getQuery, 1);
+
+    $q = $conn->prepare($getQuery);
+
+    foreach ($contacts as $c){
+      $q->bindParam(":$c", $c);
+    }
+    foreach ($keys as $k){
+      $q->bindParam(":$k", $k);
+    }
+    foreach ($values as $v){
+      $vi = explode(" ", $v)[0];
+      $q->bindParam(":$vi", $v);
+    }
+
+    $q->execute();
+    $result = $q->fetchAll();
+    return $result;
+  }
 
   public function addMessage($userid, $from_user, $message){
       $this->log->LogDebug("Adding new message '$message' from $from_user");

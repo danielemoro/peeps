@@ -1,4 +1,25 @@
-<?php session_start(); ?>
+<?php session_start();
+// create the session
+if(!isset($_SESSION['CREATED'])) {
+    $_SESSION['CREATED'] = time();
+    require_once 'contact_card.php';
+    require_once 'dao.php';
+
+//if the session created more x seconds ago
+} else if(time() - $_SESSION['CREATED'] > 7200) {
+    session_destroy();
+}
+
+// if the user is not logged in, redirect to home page
+if ($_SERVER['REQUEST_URI'] != '/index.php' and
+    $_SERVER['REQUEST_URI'] != '/login.php' and
+    $_SERVER['REQUEST_URI'] != '/signup.php') {
+  if (!isset($_SESSION['logged_in']) or !$_SESSION['logged_in']) {
+    header('Location: ./index.php');
+    exit;
+  }
+}
+?>
 
 <div id="header">
     <img src="../media/logo.png" id="logo" onclick="location.href='index.php'">

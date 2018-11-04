@@ -3,11 +3,18 @@
 class ContactCard {
   private $contact_id;
   private $contact_name;
+  private $date_added;
   private $attrs;
   private $values;
+  private $listclass;
+  private $contactDate;
+  private $dao;
 
-  public function __construct ($contact_id) {
+  public function __construct ($contact_id, $dao, $listclass='chatContactCard', $contactDate=False) {
     $this->contact_id = $contact_id;
+    $this->listclass = $listclass;
+    $this->contactDate = $contactDate;
+    $this->dao = $dao;
   }
 
   public function getCardInfo() {
@@ -15,10 +22,10 @@ class ContactCard {
       header('Location: ./fatalerror.php'); exit();
     }
 
-    require_once 'dao.php';
-    $dao = new Dao();
-    $info = $dao->getContactInfo($this->contact_id);
+    $info = $this->dao->getContactInfo($this->contact_id);
     $this->contact_name = $info[0]['contact_name'];
+    $this->date_added = end($info[0]);
+
     foreach($info as $row){
       $this->attrs[] = $row['attr'];
       $this->values[] = $row['value'];
@@ -32,7 +39,7 @@ class ContactCard {
   public function drawCard () {
     $this->getCardInfo();
     $html =
-    "<li class=\"chatContactCard\">
+    "<li class=\"{$this->listclass}\">
         <div class=\"contactCard\">
             <b> {$this->contact_name} </b>
             <table> ";
@@ -41,9 +48,11 @@ class ContactCard {
       $val = $this->values[$i];
       $html .= "<tr> <th>#{$attr}</th> <td>{$val}</td> </tr>";
     }
-    $html .=  " </table>
-        </div>
-    </li>";
+    $html .=  " </table> </div> ";
+    if($this->contactDate) {
+      $html .= "<div class=\"contactDate\">{$this->date_added}</div>";
+    }
+    $html .= "</li>";
     return $html;
   }
 }

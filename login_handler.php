@@ -22,6 +22,7 @@ if (!$id) {
   header('Location: ./login.php');
   exit;
 } else {
+  unset($_SESSION['CREATED']);
   $_SESSION['logged_in'] = true;
   $_SESSION['username'] = $username;
   $_SESSION['userid'] = $id;

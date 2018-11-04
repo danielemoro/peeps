@@ -16,3 +16,9 @@ Stack trace:
 #1 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\dao.php(32): Dao->getConnection()
 #2 D:\Google Drive\BSU\BSU 2018 Fall\CS401\website\login_handler.php(16): Dao->getUserId('a', '')
 #3 {main} 
+now - FATAL --> Could not create new contact mnbv 
+now - FATAL --> Could not create new contact lkghn 
+now - FATAL --> Could not create new contact lkghn 
+now - FATAL --> Could not create new contact kutk 
+now - FATAL --> Could not create new contact kutk 
+now - FATAL --> Could not create new contact bobby 

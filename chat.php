@@ -21,12 +21,12 @@
              ?>
 
             <ul id="messageList">
-                <h2> ... </h2> 
+                <h2> ... </h2>
                 <?php
                 foreach($messages as $m){
                   $response = $m['from_user'] == 1 ? '' : 'response';
                   if($m['from_user'] == 0 and is_numeric($m['message'])){
-                    $card = new ContactCard($m['message']);
+                    $card = new ContactCard($m['message'], $dao);
                     echo $card->drawCard();
                   } else {
                     echo "<li class=\"message {$response}\">";

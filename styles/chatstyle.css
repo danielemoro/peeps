@@ -68,6 +68,10 @@
     background-color: #46379c;
 }
 
+.response a {
+  color: white;
+}
+
 .space {
     height: 10px;
     background-color: white;
@@ -82,4 +86,3 @@
     padding: 0;
     clear: right;
 }
-

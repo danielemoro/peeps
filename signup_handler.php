@@ -40,9 +40,24 @@ if ($r != 'DONE') {
   header('Location: ./signup.php');
   exit();
 } else {
+  unset($_SESSION['CREATED']);
   $_SESSION['logged_in'] = true;
   $_SESSION['username'] = $username;
   $_SESSION['userid'] = $dao->getUserId($username, $password);
+
+  #create welcome $messages
+  $userid = $_SESSION['userid'] ;
+  $dao->addMessage($userid, 0, "Welcome!");
+  $dao->addMessage($userid, 0, "My name is Peeps and I'm here to help you manage your contacts. I do this by leveraging a simple chat interface");
+  $dao->addMessage($userid, 0, "To create a new user follow this format: @name #attribute value");
+  $dao->addMessage($userid, 0, "For example, try writing @Peeps #likes yellow marshmallows");
+  $dao->addMessage($userid, 0, "You can add as many attributes or values as you like. Remember that attributes must be all one word");
+  $dao->addMessage($userid, 0, "If you would like to search for any name, attribute, or value, simply follow your query with a ?");
+  $dao->addMessage($userid, 0, "For example try @Peeps?, #likes? or yellow marshmallow?");
+  $dao->addMessage($userid, 0, "If you have further questions, click <a href=\"mailto:moro.daniele@gmail.com\"> here </a>");
+
+
+
   header('Location: ./chat.php#bottom');
   exit;
 }
