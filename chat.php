@@ -24,13 +24,14 @@
                 <h2> ... </h2>
                 <?php
                 foreach($messages as $m){
+                  $sanitizedMessage = filter_var($m['message'], FILTER_SANITIZE_STRING);
                   $response = $m['from_user'] == 1 ? '' : 'response';
-                  if($m['from_user'] == 0 and is_numeric($m['message'])){
-                    $card = new ContactCard($m['message'], $dao);
+                  if($m['from_user'] == 0 and is_numeric($sanitizedMessage)){
+                    $card = new ContactCard($sanitizedMessage, $dao);
                     echo $card->drawCard();
                   } else {
                     echo "<li class=\"message {$response}\">";
-                    echo $m['message'];
+                    echo $sanitizedMessage;
                     echo '</li>';
                   }
                 }

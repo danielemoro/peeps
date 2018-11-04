@@ -19,9 +19,17 @@
 }
 
 .contactCard > b  {
-    font-family: Arial, SansSerif;
-    font-size: large;
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.5em;
     font-style: normal;
+    color: black;
+}
+
+.contactCard > hr  {
+  border: 0;
+  height: 2px;
+  background: #343e42;
+  background-image: linear-gradient(to right, #343e42, #e0e7ed);
 }
 
 .contactCard > table, th, td {

@@ -21,6 +21,8 @@ if ($_SERVER['REQUEST_URI'] != '/index.php' and
 }
 ?>
 
+<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+
 <div id="header">
     <img src="../media/logo.png" id="logo" onclick="location.href='index.php'">
     <ul id="buttonList">

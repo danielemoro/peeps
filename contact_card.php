@@ -38,14 +38,16 @@ class ContactCard {
 
   public function drawCard () {
     $this->getCardInfo();
+    $contact_name = filter_var($this->contact_name, FILTER_SANITIZE_STRING);
     $html =
     "<li class=\"{$this->listclass}\">
         <div class=\"contactCard\">
-            <b> {$this->contact_name} </b>
+            <b> {$contact_name} </b>
+            <hr>
             <table> ";
     for($i = 0; $i < sizeof($this->attrs); $i++){
-      $attr = $this->attrs[$i];
-      $val = $this->values[$i];
+      $attr = filter_var($this->attrs[$i], FILTER_SANITIZE_STRING);
+      $val = filter_var($this->values[$i], FILTER_SANITIZE_STRING);
       $html .= "<tr> <th>#{$attr}</th> <td>{$val}</td> </tr>";
     }
     $html .=  " </table> </div> ";
