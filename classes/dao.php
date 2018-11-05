@@ -47,7 +47,7 @@ class Dao {
   public function getUserId ($username, $password) {
     $this->log->LogDebug("Getting user id for $username");
     $conn = $this->getConnection();
-    $getQuery = "select user_id from users where username=:username and password=:password";
+    $getQuery = "select user_id from users where binary username=:username and binary password=:password";
     $q = $conn->prepare($getQuery);
     $q->bindParam(":username", $username);
     $q->bindParam(":password", $password);
