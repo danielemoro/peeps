@@ -67,14 +67,14 @@ if ($help) {
 } else if(!$question) {
   // check if correct
   if (sizeof($keys) != sizeof($values) or sizeof($keys) < 1){
-    $error = "I'm sorry, I don't understand";
+    $error = "I'm sorry, I don't understand. Try @name #attribute description";
     $dao->addMessage($userid, 0, $error);
-    header('Location: ../chat.php#bottom'); exit();
+    header('Location: ../chat.php '); exit();
   }
   if(sizeof($contacts) != 1){
-    $error = "Too many contact names listed. Try again";
+    $error = "Invalid number of contact names. I require exactly one contact name denoted with @";
     $dao->addMessage($userid, 0, $error);
-    header('Location: ../chat.php#bottom'); exit();
+    header('Location: ../chat.php '); exit();
   }
 
   $contact = $contacts[0];
@@ -108,4 +108,4 @@ if ($help) {
   }
 }
 
-header('Location: ../chat.php#bottom'); exit;
+header('Location: ../chat.php '); exit;

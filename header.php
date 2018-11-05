@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_URI'] != '/index.php' and
         </a>
 
         <?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in']) { ?>
-          <a href='chat.php#bottom'>
+          <a href='chat.php '>
             <li class= <?php if($_SERVER['REQUEST_URI'] == '/chat.php')
                               { echo "'headerButton headerButtonHot'"; }
                               else {echo "'headerButton'";} ?> > Chat </li>

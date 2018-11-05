@@ -59,6 +59,6 @@ if ($r != 'DONE') {
   $dao->addMessage($userid, 0, $search);
   $dao->addMessage($userid, 0, $final);
 
-  header('Location: ../chat.php#bottom');
+  header('Location: ../chat.php ');
   exit;
 }

@@ -6,6 +6,8 @@
         <link href="styles/chatstyle.css" type="text/css" rel="stylesheet" />
         <link href="styles/footerstyle.css" type="text/css" rel="stylesheet" />
         <link href="styles/headerstyle.css" type="text/css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="js/chat.js"></script>
     </header>
     <body>
         <?php include_once("header.php"); ?>
