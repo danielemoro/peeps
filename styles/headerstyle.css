@@ -25,7 +25,7 @@
     width: 100px;
     height: 50px;
     background-color: #d2cdfb;
-    font-family: Roboto, SansSerif;
+    font-family: 'Comfortaa', cursive;
     color: white;
     padding: 16px;
     margin-left: 10px;
@@ -46,7 +46,7 @@
     height: 20px;
     background-color: #f7f6ff;
     color: #6857f2;
-    font-family: Roboto, SansSerif;
+    font-family: 'Comfortaa', cursive;
     padding: 15px 30px 16px 30px;
     text-align: center;
 }

@@ -171,7 +171,7 @@ class Dao {
   public function getContactsWith($userid, $contacts, $keys, $values) {
     $conn = $this->getConnection();
     $getQuery = "SELECT DISTINCT c.contact_id FROM attributes a
-    JOIN contacts c ON a.contact_id=c.contact_id where ";
+    JOIN contacts c ON a.contact_id=c.contact_id where c.owner=:userid and ";
 
     // add the contact ids first
     foreach ($contacts as $c){
@@ -191,6 +191,7 @@ class Dao {
     echo print_r($getQuery, 1);
 
     $q = $conn->prepare($getQuery);
+    $q->bindParam(":userid", $userid);
 
     foreach ($contacts as $c){
       $q->bindParam(":$c", $c);
@@ -224,7 +225,7 @@ class Dao {
 
   public function getMessages($userid){
       $conn = $this->getConnection();
-      $getQuery = "SELECT from_user, message FROM messages WHERE user=:user ORDER By id DESC LIMIT 20";
+      $getQuery = "SELECT from_user, message FROM messages WHERE user=:user ORDER By id DESC LIMIT 100";
       $q = $conn->prepare($getQuery);
       $q->bindParam(":user", $userid);
       $q->execute();

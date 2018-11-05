@@ -6,20 +6,22 @@
     width: 75%;
     color: #65686f;
     text-align: center;
-    font-family: Arial, SansSerif;
+    font-family: 'Comfortaa', cursive;
     font-style: italic;
     background-color: white;
     padding-bottom: 40px;
     padding-top: 10px;
+    border-radius: 10px;
 }
 
 .userTextInput {
     width: 85%;
     display: inline;
     height: 30px;
-    font-family: Roboto;
+    font-family: 'Comfortaa', cursive;
     font-size: 1.5em;
     border: solid 1px;
+    border-radius: 10px;
     padding: 19px;
     position: relative;
     top: 2px;
@@ -32,9 +34,10 @@
     background-color: #6857f2;
     color: #ffffff;
     border: solid #46379c 2px;
+    border-radius: 10px;
     font-weight: bold;
     font-size: 1.2em;
-    font-family: Roboto;
+    font-family: 'Comfortaa', cursive;
 }
 
 #messageList {
@@ -60,16 +63,25 @@
     font-family: Roboto;
     float:left;
     clear: both;
+    border-radius: 10px;
 }
 
 .response {
     float: right;
-    text-align: right;
+    text-align: left;
     background-color: #46379c;
 }
 
 .response a {
   color: white;
+}
+
+.response h1 {
+  text-align: left;
+  font-family: 'Comfortaa', cursive;
+  font-size: 2em;
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
 .space {

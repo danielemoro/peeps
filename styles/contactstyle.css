@@ -6,6 +6,7 @@
     background-color: #e0e7ed;
     width: fit-content;
     border: #798896 solid 2px ;
+    border-radius: 10px;
     text-align: left;
     margin: 20px;
 }

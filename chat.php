@@ -24,12 +24,19 @@
                 <h2> ... </h2>
                 <?php
                 foreach($messages as $m){
-                  $sanitizedMessage = filter_var($m['message'], FILTER_SANITIZE_STRING);
                   $response = $m['from_user'] == 1 ? '' : 'response';
-                  if($m['from_user'] == 0 and is_numeric($sanitizedMessage)){
-                    $card = new ContactCard($sanitizedMessage, $dao);
-                    echo $card->drawCard();
+
+                  if($m['from_user'] == 0) {
+                   if($m['message'] != strip_tags($m['message'])) {
+                     echo $m['message'];
+                   } else {
+                     echo "<li class=\"message {$response}\">";
+                     echo $m['message'];
+                     echo '</li>';
+                   }
+
                   } else {
+                    $sanitizedMessage = filter_var($m['message'], FILTER_SANITIZE_STRING);
                     echo "<li class=\"message {$response}\">";
                     echo $sanitizedMessage;
                     echo '</li>';
@@ -39,8 +46,8 @@
                 <li class="message space"> <a name="bottom"></a> </li>
             </ul>
         </div>
-        <form method="post" class="userInput" action="chat_handler.php">
-                <input type="text" name="userInput" class="userTextInput" placeholder="Type your message here">
+        <form method="post" class="userInput" action="chat_handler.php" autocomplete="off">
+                <input type="text" name="userInput" class="userTextInput" placeholder="Type your message here" autofocus="autofocus" onfocus="this.select()">
           <input type="submit" value="Submit" class="userTextSubmit">
         </form>
 

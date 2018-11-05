@@ -1,5 +1,8 @@
 <?php
 session_start();
+require_once 'contact_card.php';
+require_once 'dao.php';
+
 $raw_userinput = $_POST['userInput'];
 $userinput = $raw_userinput;
 
@@ -7,6 +10,12 @@ $userinput = $raw_userinput;
 $_SESSION['presets']['userInput'] = $userinput;
 
 // parse the contact names, keys, and values
+//help
+$help = True;
+preg_match('/\bhelp\b/', $userinput, $helps);
+if(empty($helps)){
+  $help = False;
+}
 //question
 $question = True;
 preg_match('/[?]$/', $userinput, $questions);
@@ -20,7 +29,7 @@ if(empty($contacts) or empty($contacts[0])){
   $contacts = [];
 }
 foreach($contacts as &$c) {
-  $c = ltrim(trim($c[0]), '@');
+  $c = trim(ltrim(trim($c[0]), '@'));
 }
 // keys
 preg_match_all('/(#[\w-]+)+/', $userinput, $keys);
@@ -43,11 +52,19 @@ echo print_r($values, 1);
 echo print_r($keys, 1);
 
 //make calls to dao
-require_once 'dao.php';
 $dao = new Dao();
 $dao->addMessage($userid, 1, $raw_userinput);
 
-if(!$question) {
+if ($help) {
+  $adding = "<li class=\"message response\"> <h1>Creating</h1>To create a new contact follow this format: @name #attribute description #attribute2 description2 ...<br>
+  You can add as many attributes or values as you like. Remember that attributes must be all one word.
+  <br> For example, try writing '@Peeps #likes yellow marshmallows' </li>";
+  $search = "<li class=\"message response\"> <h1>Searching</h1>If you would like to search for any name, attribute, or value, simply follow your query with a '?' <br>
+  For example try '@Peeps?', '#likes?' or 'yellow marshmallow?' </li>";
+  $dao->addMessage($userid, 0, $adding);
+  $dao->addMessage($userid, 0, $search);
+
+} else if(!$question) {
   // check if correct
   if (sizeof($keys) != sizeof($values) or sizeof($keys) < 1){
     $error = "I'm sorry, I don't understand";
@@ -70,15 +87,19 @@ if(!$question) {
   //add bot response
   $bot_response = "Got it! Added that information";
   $dao->addMessage($userid, 0, $bot_response);
-  $dao->addMessage($userid, 0, $contact_id);
+
+  $card = new ContactCard($contact_id, $dao);
+  $dao->addMessage($userid, 0, $card->drawCard());
+
 } else {
   $count = 0;
   $result_contacts = $dao->getContactsWith($userid, $contacts, $keys, $values);
+  if(count == 0){ $dao->addMessage($userid, 0, "I found some results from your search:"); }
   foreach($result_contacts as $i){
-    if(count == 0){ $dao->addMessage($userid, 0, "I found some results from your search:"); }
     $count++;
     $contact_id = $i['contact_id'];
-    $dao->addMessage($userid, 0, $contact_id);
+    $card = new ContactCard($contact_id, $dao);
+    $dao->addMessage($userid, 0, $card->drawCard());
   }
 
   if($count == 0){

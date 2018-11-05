@@ -47,16 +47,17 @@ if ($r != 'DONE') {
 
   #create welcome $messages
   $userid = $_SESSION['userid'] ;
-  $dao->addMessage($userid, 0, "Welcome!");
-  $dao->addMessage($userid, 0, "My name is Peeps and I'm here to help you manage your contacts. I do this by leveraging a simple chat interface");
-  $dao->addMessage($userid, 0, "To create a new user follow this format: @name #attribute value");
-  $dao->addMessage($userid, 0, "For example, try writing @Peeps #likes yellow marshmallows");
-  $dao->addMessage($userid, 0, "You can add as many attributes or values as you like. Remember that attributes must be all one word");
-  $dao->addMessage($userid, 0, "If you would like to search for any name, attribute, or value, simply follow your query with a ?");
-  $dao->addMessage($userid, 0, "For example try @Peeps?, #likes? or yellow marshmallow?");
-  $dao->addMessage($userid, 0, "If you have further questions, click <a href=\"mailto:moro.daniele@gmail.com\"> here </a>");
-
-
+  $welcome = "<li class=\"message response\"> <h1>Welcome!</h1>My name is Peeps, and I'm here to help you manage your contacts. <br>I do this by leveraging a simple chat interface </li>";
+  $adding = "<li class=\"message response\"> <h1>Creating</h1>To create a new contact follow this format: @name #attribute description #attribute2 description2 ...<br>
+  You can add as many attributes or values as you like. Remember that attributes must be all one word.
+  <br> For example, try writing '@Peeps #likes yellow marshmallows' </li>";
+  $search = "<li class=\"message response\"> <h1>Searching</h1>If you would like to search for any name, attribute, or value, simply follow your query with a '?' <br>
+  For example try '@Peeps?', '#likes?' or 'yellow marshmallow?' </li>";
+  $final = "<li class=\"message response\"> If you have further questions, click <a href=\"mailto:moro.daniele@gmail.com\"> here </a> </li>";
+  $dao->addMessage($userid, 0, $welcome);
+  $dao->addMessage($userid, 0, $adding);
+  $dao->addMessage($userid, 0, $search);
+  $dao->addMessage($userid, 0, $final);
 
   header('Location: ./chat.php#bottom');
   exit;
