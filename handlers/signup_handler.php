@@ -20,7 +20,7 @@ if(preg_match('/[\W]+/', $username)) {
   $allgood = False;
 }
 if(!$allgood){
-  header('Location: ./signup.php');
+  header('Location: ../signup.php');
   exit();
 }
 
@@ -29,7 +29,7 @@ $username = filter_var($username, FILTER_SANITIZE_STRING);
 $password = filter_var($password, FILTER_SANITIZE_STRING);
 
 # ask database to add user
-require_once 'dao.php';
+require_once '../classes/dao.php';
 $dao = new Dao();
 $r = $dao->addUser($username, $password);
 
@@ -37,7 +37,7 @@ $r = $dao->addUser($username, $password);
 if ($r != 'DONE') {
   $_SESSION['error_message'] = "Error creating user '$username' <br>" . print_r($r, true);
   $_SESSION['logged_in'] = false;
-  header('Location: ./signup.php');
+  header('Location: ../signup.php');
   exit();
 } else {
   unset($_SESSION['CREATED']);
@@ -59,6 +59,6 @@ if ($r != 'DONE') {
   $dao->addMessage($userid, 0, $search);
   $dao->addMessage($userid, 0, $final);
 
-  header('Location: ./chat.php#bottom');
+  header('Location: ../chat.php#bottom');
   exit;
 }

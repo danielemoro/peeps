@@ -19,7 +19,7 @@ class ContactCard {
 
   public function getCardInfo() {
     if(!isset($this->contact_id)){
-      header('Location: ./fatalerror.php'); exit();
+      header('Location: ../fatalerror.php'); exit();
     }
 
     $info = $this->dao->getContactInfo($this->contact_id);
@@ -32,7 +32,7 @@ class ContactCard {
     }
 
     if (sizeof($this->attrs) != sizeof($this->values)){
-      header('Location: ./fatalerror.php'); exit();
+      header('Location: ../fatalerror.php'); exit();
     }
   }
 

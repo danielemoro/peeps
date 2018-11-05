@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'contact_card.php';
-require_once 'dao.php';
+require_once '../classes/contact_card.php';
+require_once '../classes/dao.php';
 
 $raw_userinput = $_POST['userInput'];
 $userinput = $raw_userinput;
@@ -69,12 +69,12 @@ if ($help) {
   if (sizeof($keys) != sizeof($values) or sizeof($keys) < 1){
     $error = "I'm sorry, I don't understand";
     $dao->addMessage($userid, 0, $error);
-    header('Location: ./chat.php#bottom'); exit();
+    header('Location: ../chat.php#bottom'); exit();
   }
   if(sizeof($contacts) != 1){
     $error = "Too many contact names listed. Try again";
     $dao->addMessage($userid, 0, $error);
-    header('Location: ./chat.php#bottom'); exit();
+    header('Location: ../chat.php#bottom'); exit();
   }
 
   $contact = $contacts[0];
@@ -94,8 +94,8 @@ if ($help) {
 } else {
   $count = 0;
   $result_contacts = $dao->getContactsWith($userid, $contacts, $keys, $values);
-  if(count == 0){ $dao->addMessage($userid, 0, "I found some results from your search:"); }
   foreach($result_contacts as $i){
+    if($count == 0){ $dao->addMessage($userid, 0, "I found some results from your search:"); }
     $count++;
     $contact_id = $i['contact_id'];
     $card = new ContactCard($contact_id, $dao);
@@ -108,4 +108,4 @@ if ($help) {
   }
 }
 
-header('Location: ./chat.php#bottom'); exit;
+header('Location: ../chat.php#bottom'); exit;

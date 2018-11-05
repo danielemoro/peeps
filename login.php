@@ -6,10 +6,10 @@
         <link href="styles/headerstyle.css" type="text/css" rel="stylesheet" />
     </header>
     <body>
-        <?php include_once("templates/header.php"); ?>
+        <?php include_once("header.php"); ?>
 
         <h1> Log In </h1>
-        <form method="post" action="login_handler.php">
+        <form method="post" action="handlers/login_handler.php">
                 <h2> Username </h2>
                 <input type="text" name="username" class="formInput"
                       value=<?php if(isset($_SESSION['presets']) and isset($_SESSION['presets']['username'])) {
@@ -27,6 +27,6 @@
         }
         ?>
 
-        <?php include_once("templates/footer.php"); ?>
+        <?php include_once("footer.php"); ?>
     </body>
 </html>

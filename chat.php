@@ -8,13 +8,13 @@
         <link href="styles/headerstyle.css" type="text/css" rel="stylesheet" />
     </header>
     <body>
-        <?php include_once("templates/header.php"); ?>
+        <?php include_once("header.php"); ?>
 
         <div id="chatFlow">
             <?php
             //make calls to dao
-            require_once 'dao.php';
-            require_once 'contact_card.php';
+            require_once 'classes/dao.php';
+            require_once 'classes/contact_card.php';
             $dao = new Dao();
             $userid = $_SESSION['userid'];
             $messages = $dao->getMessages($userid);
@@ -46,11 +46,11 @@
                 <li class="message space"> <a name="bottom"></a> </li>
             </ul>
         </div>
-        <form method="post" class="userInput" action="chat_handler.php" autocomplete="off">
+        <form method="post" class="userInput" action="handlers/chat_handler.php" autocomplete="off">
                 <input type="text" name="userInput" class="userTextInput" placeholder="Type your message here" autofocus="autofocus" onfocus="this.select()">
           <input type="submit" value="Submit" class="userTextSubmit">
         </form>
 
-        <?php include_once("templates/footer.php"); ?>
+        <?php include_once("footer.php"); ?>
     </body>
 </html>

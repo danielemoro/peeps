@@ -2,8 +2,8 @@
 // create the session
 if(!isset($_SESSION['CREATED'])) {
     $_SESSION['CREATED'] = time();
-    require_once 'contact_card.php';
-    require_once 'dao.php';
+    require_once 'classes/contact_card.php';
+    require_once 'classes/dao.php';
 
 //if the session created more x seconds ago
 } else if(time() - $_SESSION['CREATED'] > 7200) {
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_URI'] != '/index.php' and
     </ul>
 
     <?php if(isset($_SESSION['logged_in']) and $_SESSION['logged_in']) { ?>
-      <a href='logout_handler.php'>
+      <a href='handlers/logout_handler.php'>
         <div id="loginButton"> Welcome <?php echo $_SESSION['username']; ?>! <u>Sign Out</u> </div>
       </a>
     <?php } else { ?>

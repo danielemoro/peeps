@@ -12,7 +12,7 @@ class Dao {
   private $conn;
 
   public function __construct () {
-    $this->log = new KLogger("log.txt", KLogger::INFO);
+    $this->log = new KLogger("../log.txt", KLogger::INFO);
   }
 
   public function getConnection () {
@@ -27,7 +27,7 @@ class Dao {
 
     } catch (Exception $e) {
       $this->log->LogFatal($e);
-      header('Location: ./fatalerror.php');
+      header('Location: ../fatalerror.php');
       exit();
     }
 
@@ -127,7 +127,7 @@ class Dao {
           $contact_id = $this->getContactID($userid, $contact);
           if(!$contact_id) {
             $this->log->LogFatal("Could not create new contact $contact");
-            header('Location: ./fatalerror.php'); exit();
+            header('Location: ../fatalerror.php'); exit();
           }
       }
 
