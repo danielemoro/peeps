@@ -104,8 +104,6 @@ class Dao {
     $conn = $this->getConnection();
     date_default_timezone_set('America/Denver');
     $timestamp = date('Y-m-d H:i:s');
-
-    $this->setTimezone();
     $saveQuery =
        "SET time_zone = 'America/Denver';
        INSERT INTO contacts (owner, contact_name, date_added)

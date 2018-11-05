@@ -43,8 +43,9 @@
                   }
                 }
                 ?>
-                <li class="message space"> <a name="bottom"></a> </li>
+                <li class="message space"> </li>
             </ul>
+            <a name="bottom"></a>
         </div>
         <form method="post" class="userInput" action="handlers/chat_handler.php" autocomplete="off">
                 <input type="text" name="userInput" class="userTextInput" placeholder="Type your message here" autofocus="autofocus" onfocus="this.select()">
