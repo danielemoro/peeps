@@ -16,10 +16,12 @@
             ourselves talking to someone who we know we’ve met before, but we don’t remember anything about them. </p>
             <p> Peeps solves this problem by allowing you to create and modify contacts through a fast and intuitive natural
              language system in the form of a chatbot. </p>
+            <?php if(!isset($_SESSION['logged_in']) or !$_SESSION['logged_in']) { ?>
             <div class="buttonRow">
                 <button onclick="location.href='login.php'">Log In</button>
                 <button onclick="location.href='signup.php'" class="buttonHot">Sign Up</button>
             </div>
+            <?php } ?>
         </div>
 
         <?php include_once("footer.php"); ?>

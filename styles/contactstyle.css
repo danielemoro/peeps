@@ -4,7 +4,7 @@
     color: #798896;
     padding: 10px;
     background-color: #e0e7ed;
-    width: fit-content;
+    display: table; /*I would like to use fit-width, but it doesn't work on non-chrome browsers*/
     border: #798896 solid 2px ;
     border-radius: 10px;
     text-align: left;

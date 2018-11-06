@@ -169,20 +169,22 @@ class Dao {
   public function getContactsWith($userid, $contacts, $keys, $values) {
     $conn = $this->getConnection();
     $getQuery = "SELECT DISTINCT c.contact_id FROM attributes a
-    JOIN contacts c ON a.contact_id=c.contact_id where c.owner=:userid and ";
+    JOIN contacts c ON a.contact_id=c.contact_id where c.owner = :userid and ";
 
     // add the contact ids first
     foreach ($contacts as $c){
+      $c = preg_replace("/[^A-Za-z0-9]/", '', $c);//sanitize
       $getQuery .= "c.contact_name = :$c and ";
     }
     // add the keys
     foreach ($keys as $k){
+      $k = preg_replace("/[^A-Za-z0-9]/", '', $k);//sanitize
       $getQuery .= "a.attr = :$k and ";
     }
     // add the values
     foreach ($values as $v){
-      $vi = explode(" ", $v)[0];
-      $getQuery .= "a.value = :$vi and ";
+      $v = preg_replace("/[^A-Za-z0-9]/", '', $v);//sanitize
+      $getQuery .= "a.value = :$v and ";
     }
     //remove the last and
     $getQuery = substr($getQuery, 0, -5);
@@ -192,14 +194,16 @@ class Dao {
     $q->bindParam(":userid", $userid);
 
     foreach ($contacts as $c){
-      $q->bindParam(":$c", $c);
+      $cs = preg_replace("/[^A-Za-z0-9]/", '', $c);//sanitize
+      $q->bindParam(":$cs", $c);
     }
     foreach ($keys as $k){
-      $q->bindParam(":$k", $k);
+      $ks = preg_replace("/[^A-Za-z0-9]/", '', $k);//sanitize
+      $q->bindParam(":$ks", $k);
     }
     foreach ($values as $v){
-      $vi = explode(" ", $v)[0];
-      $q->bindParam(":$vi", $v);
+      $vs = preg_replace("/[^A-Za-z0-9]/", '', $v); //sanitize
+      $q->bindParam(":$vs", $v);
     }
 
     $q->execute();
