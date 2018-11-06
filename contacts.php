@@ -27,6 +27,9 @@
                   $card = new ContactCard($c[0], $dao, $listclass='contactListItem', $contactDate=True);
                   echo $card->drawCard();
                 }
+                if (sizeof($contacts) == 0){
+                  echo "<h1> Nothing here yet </h1> <h2> Try adding a contact with @name #attribute description </h2>";
+                }
                 ?>
                 <li class="space"></li>
             </ul>
