@@ -24,7 +24,10 @@
 
         <?php
         if (isset($_SESSION['error_message'])) {
-          foreach ($_SESSION['error_message'] as $error) {
+          $errors = $_SESSION['error_message'];
+          $errors = is_array($errors) ? $errors : array($errors);
+
+          foreach ($errors as $error) {
             ?> <div class="errorMessage"> <?=$error?> </div> <?php
           }
           unset($_SESSION['error_message']);
