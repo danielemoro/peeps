@@ -38,7 +38,7 @@ foreach($keys as &$k) {
   $k = ltrim(trim($k), '#');
 }
 //values
-preg_match_all('/( [^#@][\w-]+)+/', ' '.$userinput, $values);
+preg_match_all('/( [^#@]+[\w-]+)+/', ' '.$userinput, $values);
 $values = $values[0];
 foreach($values as &$v) {
   $v = ltrim(trim($v), '#');
