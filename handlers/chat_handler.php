@@ -78,7 +78,7 @@ if ($help) {
 } else if(!$question) {
   // check if correct
   if (sizeof($keys) != sizeof($values) or sizeof($keys) < 1){
-    $error = "I'm sorry, I don't understand. Try @name #attribute description";
+    $error = "I'm sorry, I don't understand. Type 'help' if you need help";
     $dao->addMessage($userid, 0, $error);
     if($isAJAX){
       $newMessages[] = array(0, $error);
