@@ -14,10 +14,10 @@ $(function() {
     //Get
     var userInput = "  " + $('#userchatbox').val();
 
-    function highlight(userInput) {
+    function highlight(rawInput) {
+      userInput = rawInput;
       // Apply the highlighting
-      console.log("-------------------------")
-      console.log(userInput)
+
       // help
       var found = userInput.match(/help/i);
       if(found){
@@ -32,35 +32,44 @@ $(function() {
       }
 
       //contacts
+      var numContacts = 0;
       userInput = userInput.replace(/\B\@[\w| ]{3,}/i, function(match, offset, string) {
+        numContacts += 1;
         var space = match.lastIndexOf(" ")
         return "<span|class='contact'>" + match.substring(0, space) + "</span>" + match.substring(space, match.length);
       });
 
       //values
+      var numVals = 0;
       userInput = userInput.replace(/(#[\w-]+)+( [^#@]+[\w-]+)+/g, function(match, offset, string) {
+        numVals += 1;
         var valueIndex = match.indexOf(" ", 1) + 1
         return match.substring(0, valueIndex-1) +
                "<span|class='value'>" + match.substring(valueIndex, match.length) + "</span>"
       });
 
       //keys
+      var numKeys = 0;
       userInput = userInput.replace(/(#[\w-]+)+/g, function(match, offset, string) {
+        numKeys += 1;
         return "<span|class='key'>" + match + " </span>"
       });
+
+      //check if everything ok
+      if(Math.abs(numKeys - numVals) > 1 || (numContacts != 1 && numKeys > 0)) {
+          return "<span|class='error'>" + rawInput + " </span>";
+      }
 
       return userInput;
     }
 
     userInput = highlight(userInput);
-    console.log(userInput);
 
     // replace the spaces
     userInput = userInput.replace(/ /g, "&nbsp;");
     userInput = userInput.replace(/\|/g, " ");
 
     //Set
-    console.log(userInput)
     $('#highlighttext').html(userInput);
   });
 });

@@ -30,13 +30,14 @@
   overflow: hidden;
 }
 
-.help, .question, .contact {
+.help, .question, .contact, .error {
   border-radius: 10px;
 }
 
 .help { background-color: #eded14 }
 .question {  background-color: #4d88e3 }
 .contact {  background-color: #bd75e7 }
+.error {  background-color: #f74e4e }
 .key {
   background-color: #8e82f1;
   border-top-left-radius: 10px;
@@ -54,7 +55,7 @@
     height: 30px;
     font-family: 'Comfortaa', cursive;
     font-size: 1.5em;
-    border: solid 1px;
+    border: solid 1px #a6a6a6;
     border-radius: 10px;
     padding: 19px;
     position: relative;
