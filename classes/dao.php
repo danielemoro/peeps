@@ -44,7 +44,29 @@ class Dao {
     $q->execute();
   }
 
-  public function getUserId ($username, $password) {
+  public function getSalt($username) {
+    $conn = $this->getConnection();
+    $getQuery = "select salt from users where binary username=:username";
+    $q = $conn->prepare($getQuery);
+    $q->bindParam(":username", $username);
+    $q->execute();
+    $result = reset($q->fetchAll());
+    if (isset($result[0])) {
+      return $result[0];
+    } else {
+      return False;
+    }
+  }
+
+  public function getUserId ($username, $password, $hash=True) {
+    if($hash){
+      $u = $username;
+      $salt = $this->getSalt($u);
+      if(!$salt)
+        return False;
+      $password = hash("sha256", $password . $salt);
+    }
+
     $this->log->LogDebug("Getting user id for $username");
     $conn = $this->getConnection();
     $getQuery = "select user_id from users where binary username=:username and binary password=:password";
@@ -60,18 +82,25 @@ class Dao {
     }
  }
 
- public function addUser ($username, $password) {
+ public function addUser ($username, $password, $hash=True) {
    try {
+     $salt = 'default';
+     if($hash){
+       $salt = rand();
+       $password = hash("sha256", $password . $salt);
+     }
+
      $this->log->LogDebug("Creating new user $username");
      $conn = $this->getConnection();
       $saveQuery =
           "INSERT INTO users
-          (username, password)
+          (username, password, salt)
           VALUES
-          (:username, :password)";
+          (:username, :password, :salt)";
       $q = $conn->prepare($saveQuery);
       $q->bindParam(":username", $username);
       $q->bindParam(":password", $password);
+      $q->bindParam(":salt", $salt);
       $q->execute();
       return 'DONE';
     } catch(PDOException $e) {
