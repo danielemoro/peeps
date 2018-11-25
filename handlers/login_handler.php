@@ -18,7 +18,7 @@ $id = $dao->getUserId($username, $password);
 # check if the id works
 if (!$id) {
   $_SESSION['logged_in'] = false;
-  $_SESSION['error_message'] = "Username or password is invalid";
+  $_SESSION['error_message'][] = "Username or password is invalid";
   header('Location: ../login.php');
   exit;
 } else {

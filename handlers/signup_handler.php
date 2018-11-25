@@ -9,14 +9,16 @@ $_SESSION['presets']['username'] = $username;
 # validiate data
 $allgood = True;
 if(preg_match('/[\W]+/', $username)) {
-  $_SESSION['error_message'] = "Username contains invalid characters <br>
+  $_SESSION['error_message'][] = "Username contains invalid characters <br>
                                 Only letters, numbers, and underscores are valid";
   $allgood = False;
-} elseif (preg_match('/([\w]{20,}|^\s*$)/', $username)) {
-  $_SESSION['error_message'] = "Invalid username length";
+}
+if (preg_match('/([\w]{20,}|^\s*$)/', $username)) {
+  $_SESSION['error_message'][] = "Invalid username length";
   $allgood = False;
-} elseif (preg_match('/([\w]{20,}|^\s*$)/', $password)) {
-  $_SESSION['error_message'] = "Invalid password length";
+}
+if (preg_match('/([\w]{20,}|^\s*$)/', $password)) {
+  $_SESSION['error_message'][] = "Invalid password length";
   $allgood = False;
 }
 if(!$allgood){
