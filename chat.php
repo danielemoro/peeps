@@ -45,13 +45,16 @@
                   }
                 }
                 ?>
-                <li class="message space"> </li>
             </ul>
+            <div class="message space"> </div>
             <a name="bottom"></a>
         </div>
-        <form method="post" class="userInput" action="handlers/chat_handler.php" autocomplete="off">
+
+        <!-- Replaced by ajax: action="handlers/chat_handler.php" -->
+        <form method="POST" class="userInput" autocomplete="off" id="chatform">
           <div id="highlighttext"> </div>
           <input id="userchatbox" type="text" name="userInput" class="userTextInput" placeholder="Type your message here" autofocus="autofocus" onfocus="this.select()">
+          <input id="ajaxinput" type="text" name="ajax" value="True">
           <input type="submit" value="Submit" class="userTextSubmit">
         </form>
 

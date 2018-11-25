@@ -30,6 +30,10 @@
   overflow: hidden;
 }
 
+#ajaxinput {
+  display: none;
+}
+
 .help, .question, .contact, .error {
   border-radius: 10px;
 }

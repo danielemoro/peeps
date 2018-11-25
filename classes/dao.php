@@ -217,7 +217,7 @@ class Dao {
     }
     //remove the last and
     $getQuery = substr($getQuery, 0, -5);
-    echo print_r($getQuery, 1);
+    // echo print_r($getQuery, 1);
 
     $q = $conn->prepare($getQuery);
     $q->bindParam(":userid", $userid);

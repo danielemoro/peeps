@@ -2,6 +2,52 @@ $(function() {
   // scroll to the bottom
   $('#chatFlow').scrollTop($('#chatFlow')[0].scrollHeight);
 
+  $("#chatform").submit(function(){
+    var values = $("#chatform").serialize();
+    var userInput = $("#userchatbox").val();
+    $.ajax({
+      type: "POST",
+      url: "handlers/chat_handler.php",
+      data: values,
+      success: function(msg) {
+        for (i = 0; i < msg.length; i++) {
+            var curr = msg[i];
+            var user = curr[0];
+            var response = (user == 1) ? '' : 'response';
+            var message = curr[1];
+
+            if(/<[a-z][\s\S]*>/i.test(message)){
+              $("#messageList").append(message);
+            } else {
+              message = "<li class=\"message " + response + "\">" +  message + '</li>';
+              $("#messageList").append(message);
+            }
+        }
+
+        //scroll to bottom
+        $("#chatFlow").animate({ scrollTop: $('#chatFlow').prop("scrollHeight")}, 1000);
+
+        //clear input
+        $("#userchatbox").val('');
+        $("#highlighttext").html("");
+      },
+      dataType: "json",
+      error: function (msg) {
+        console.log("FAILURE")
+        message = "<li class=\"message response\"> I'm sorry, something went wrong. Please try again.</li>";
+        $("#messageList").append(message);
+
+        //scroll to bottom
+        $("#chatFlow").animate({ scrollTop: $('#chatFlow').prop("scrollHeight")}, 1000);
+        //clear input
+        $("#userchatbox").val('');
+        $("#highlighttext").html("");
+      }
+    });
+    return false;
+  });
+
+  // Move the highlighting to the right place
   function moveHighlight(){
     var pos = $("#userchatbox").position();
     $("#highlighttext").css({left: pos.left+5, top: pos.top+10});
@@ -9,7 +55,7 @@ $(function() {
   $(window).on('resize', moveHighlight);
   moveHighlight();
 
-
+  // Highlight the input in real time
   $("#userchatbox").keyup(function() {
     //Get
     var userInput = "  " + $('#userchatbox').val();

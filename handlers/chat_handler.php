@@ -3,6 +3,9 @@ session_start();
 require_once '../classes/contact_card.php';
 require_once '../classes/dao.php';
 
+$isAJAX = $_POST['ajax'];
+$newMessages = [];
+
 $raw_userinput = $_POST['userInput'];
 $userinput = $raw_userinput;
 
@@ -46,14 +49,17 @@ foreach($values as &$v) {
 //user_id
 $userid = $_SESSION['userid'];
 
-echo $question;
-echo print_r($contacts, 1);
-echo print_r($values, 1);
-echo print_r($keys, 1);
+// echo $question;
+// echo print_r($contacts, 1);
+// echo print_r($values, 1);
+// echo print_r($keys, 1);
 
 //make calls to dao
 $dao = new Dao();
 $dao->addMessage($userid, 1, $raw_userinput);
+if($isAJAX){
+  $newMessages[] = array(1, $raw_userinput);
+}
 
 if ($help) {
   $adding = "<li class=\"message response\"> <h1>Creating</h1>To create a new contact follow this format: @name #attribute description #attribute2 description2 ...<br>
@@ -64,48 +70,88 @@ if ($help) {
   $dao->addMessage($userid, 0, $adding);
   $dao->addMessage($userid, 0, $search);
 
+  if($isAJAX){
+    $newMessages[] = array(0, $adding);
+    $newMessages[] = array(0, $search);
+  }
+
 } else if(!$question) {
   // check if correct
   if (sizeof($keys) != sizeof($values) or sizeof($keys) < 1){
     $error = "I'm sorry, I don't understand. Try @name #attribute description";
     $dao->addMessage($userid, 0, $error);
-    header('Location: ../chat.php '); exit();
+    if($isAJAX){
+      $newMessages[] = array(0, $error);
+      echo json_encode($newMessages);
+      exit();
+    } else {
+      header('Location: ../chat.php '); exit();
+    }
   }
   if(sizeof($contacts) != 1){
     $error = "Invalid number of contact names. I require exactly one contact name denoted with @";
     $dao->addMessage($userid, 0, $error);
-    header('Location: ../chat.php '); exit();
+    if($isAJAX){
+      $newMessages[] = array(0, $error);
+      echo json_encode($newMessages);
+      exit();
+    } else {
+      header('Location: ../chat.php '); exit();
+    }
   }
 
   $contact = $contacts[0];
   $contact_id = '';
   for ($i = 0; $i < sizeof($keys); $i++) {
-      echo "<br>addContactInfo($userid, $contact, {$keys[$i]}, {$values[$i]})";
+      // echo "<br>addContactInfo($userid, $contact, {$keys[$i]}, {$values[$i]})";
       $contact_id = $dao->addContactInfo($userid, $contact, $keys[$i], $values[$i]);
   }
 
   //add bot response
   $bot_response = "Got it! Added that information";
   $dao->addMessage($userid, 0, $bot_response);
-
   $card = new ContactCard($contact_id, $dao);
-  $dao->addMessage($userid, 0, $card->drawCard());
+  $cardhtml = $card->drawCard();
+  $dao->addMessage($userid, 0, $cardhtml);
+
+  if($isAJAX){
+    $newMessages[] = array(0, $bot_response);
+    $newMessages[] = array(0, print_r($cardhtml, 1));
+  }
 
 } else {
   $count = 0;
   $result_contacts = $dao->getContactsWith($userid, $contacts, $keys, $values);
   foreach($result_contacts as $i){
-    if($count == 0){ $dao->addMessage($userid, 0, "I found some results from your search:"); }
+    if($count == 0){
+      $dao->addMessage($userid, 0, "I found some results from your search:");
+      if($isAJAX){
+        $newMessages[] = array(0, "I found some results from your search:");
+      }
+    }
     $count++;
     $contact_id = $i['contact_id'];
     $card = new ContactCard($contact_id, $dao);
-    $dao->addMessage($userid, 0, $card->drawCard());
+    $cardhtml = $card->drawCard();
+    $dao->addMessage($userid, 0, $cardhtml);
+
+    if($isAJAX){
+      $newMessages[] = array(0, print_r($cardhtml, 1));
+    }
   }
 
   if($count == 0){
     $bot_response = "No results found";
     $dao->addMessage($userid, 0, $bot_response);
+
+    if($isAJAX){
+      $newMessages[] = array(0, $bot_response);
+    }
   }
 }
 
-header('Location: ../chat.php '); exit;
+if($isAJAX){
+  echo json_encode($newMessages);
+} else {
+  header('Location: ../chat.php '); exit;
+}

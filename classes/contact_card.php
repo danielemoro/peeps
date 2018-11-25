@@ -55,6 +55,7 @@ class ContactCard {
       $html .= "<div class=\"contactDate\">{$this->date_added}</div>";
     }
     $html .= "</li>";
+
     return $html;
   }
 }
