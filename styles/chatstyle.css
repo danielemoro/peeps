@@ -68,6 +68,10 @@
     /* background-color: rgba(224,231,237,0.7); */
 }
 
+input:focus, textarea:focus {
+    outline: none;
+}
+
 .userTextSubmit {
     width: 10%;
     height: 40px;
