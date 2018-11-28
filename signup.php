@@ -16,7 +16,7 @@
                         value=<?php if(isset($_SESSION['presets']) and isset($_SESSION['presets']['username'])) {
                             echo $_SESSION['presets']['username'];
                             } else { echo ''; } ?> >
-                  <label for="username">Password</label>
+                  <label for="password">Password</label>
                   <input type="password" name="password" class="formInput">
             <input type="submit" value="Submit" class="formButton">
           </form>
