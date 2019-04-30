@@ -31,6 +31,13 @@ h2, label {
     font-size: 1.5em;
 }
 
+.h3c {
+    text-align: left;
+    font-family: 'Comfortaa', SansSerif;
+    font-size: 1em;
+    margin: 1px;
+}
+
 p{
     font-family: 'Roboto', SansSerif;
     padding: 20px;

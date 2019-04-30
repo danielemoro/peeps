@@ -4,6 +4,7 @@ require_once 'KLogger.php';
 class Dao {
   //CLEARDB_DATABASE_URL: mysql://ba6b95c5bb543d:489ef638@us-cdbr-iron-east-01.cleardb.net/heroku_bc7a594b677ccd7?reconnect=true
 
+  // IMPORTANT CHANGE THESE PARAMETERS TO WORK WITH YOUR DATABASE
   private $host = "us-cdbr-iron-east-01.cleardb.net";
   private $db = "heroku_bc7a594b677ccd7";
   private $user = "ba6b95c5bb543d";

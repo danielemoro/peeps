@@ -33,7 +33,8 @@ $(function() {
       },
       dataType: "json",
       error: function (msg) {
-        console.log("FAILURE")
+        console.log("RECEIVED FAILURE")
+        console.log(msg)
         message = "<li class=\"message response\"> I'm sorry, something went wrong. Please try again.</li>";
         $("#messageList").append(message);
 
@@ -46,6 +47,42 @@ $(function() {
     });
     return false;
   });
+
+  // ask for updates
+  (function get_updates() {
+    $.ajax({
+      type: "POST",
+      url: "handlers/chat_handler.php",
+      data: 'userInput=&ajax=True',
+      success: function(msg) {
+        if (msg.length > 0) {
+          for (i = 0; i < msg.length; i++) {
+              var curr = msg[i];
+              var user = curr[0];
+              var response = (user == 1) ? '' : 'response';
+              var message = curr[1];
+
+              if(/<[a-z][\s\S]*>/i.test(message)){
+                console.log("adding");
+                console.log(message);
+                $("#messageList").append(message);
+              } else {
+                message = "<li class=\"message " + response + "\">" +  message + '</li>';
+                $("#messageList").append(message);
+              }
+          }
+          //scroll to bottom
+          $("#chatFlow").animate({ scrollTop: $('#chatFlow').prop("scrollHeight")}, 1000);
+        }
+      },
+      dataType: "json",
+      error: function (msg) {
+        console.log("RECEIVED FAILURE")
+        console.log(msg)
+      }
+    });
+    setTimeout(get_updates, 1000);
+  })();
 
   // Move the highlighting to the right place
   function moveHighlight(){

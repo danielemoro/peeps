@@ -19,6 +19,19 @@ preg_match('/\bhelp\b/', $userinput, $helps);
 if(empty($helps)){
   $help = False;
 }
+
+//find information
+$findinfo = True;
+preg_match('/find/m', $userinput, $findinfos); // ([a-zA-z]{2,}\s[a-zA-z]{2,})
+if(empty($findinfos)){
+  $findinfo = False; //TODO CHANGE THIS TO FALSE
+}
+$findinfo_update = True;
+if(strlen($userinput) > 0){
+  $findinfo_update = False; //TODO CHANGE THIS TO FALSE
+}
+
+
 //question
 $question = True;
 preg_match('/[?]$/', $userinput, $questions);
@@ -49,19 +62,67 @@ foreach($values as &$v) {
 //user_id
 $userid = $_SESSION['userid'];
 
-// echo $question;
-// echo print_r($contacts, 1);
-// echo print_r($values, 1);
-// echo print_r($keys, 1);
 
 //make calls to dao
 $dao = new Dao();
-$dao->addMessage($userid, 1, $raw_userinput);
-if($isAJAX){
-  $newMessages[] = array(1, $raw_userinput);
+if(strlen($userinput) > 0){
+  $dao->addMessage($userid, 1, $raw_userinput);
+  if($isAJAX){
+    $newMessages[] = array(1, $raw_userinput);
+  }
 }
 
-if ($help) {
+if ($findinfo_update) {
+  $message = file_get_contents('../peeps_finder_out.txt', FILE_USE_INCLUDE_PATH);
+  if(strlen(trim($message)) > 0){
+    if(substr($message, 0, 1) == "["){
+      file_put_contents('../peeps_finder_in.txt', 'END' . PHP_EOL, FILE_APPEND);
+      $_SESSION['presets']['findinfo'] = False;
+      file_put_contents('../peeps_finder_out.txt', '');
+
+      $newinfo = json_decode($message, true);
+      if (sizeof($newinfo) > 1){
+        for ($i = 1; $i < sizeof($newinfo); $i++) {
+            file_put_contents('../debug.txt', $userid . $newinfo[0][1] . $newinfo[$i][0] . $newinfo[$i][1] . PHP_EOL, FILE_APPEND);
+            // echo "<br>addContactInfo($userid, $contact, {$keys[$i]}, {$values[$i]})";
+            $contact_id = $dao->addContactInfo($userid, $newinfo[0][1], $newinfo[$i][0], $newinfo[$i][1]);
+        }
+        $bot_response = "Adding the verified information";
+        $dao->addMessage($userid, 0, $bot_response);
+        $card = new ContactCard($contact_id, $dao);
+        $cardhtml = $card->drawCard();
+        $dao->addMessage($userid, 0, $cardhtml);
+        if($isAJAX){
+          $newMessages[] = array(0, $bot_response);
+          $newMessages[] = array(0, print_r($cardhtml, 1));
+        }
+      } else {
+        $bot_response = "Adding no information";
+        $dao->addMessage($userid, 0, $bot_response);
+        if($isAJAX){
+          $newMessages[] = array(0, $bot_response);
+        }
+      }
+    } else {
+      file_put_contents('../peeps_finder_out.txt', '');
+      $message = "<li class=\"message response\">" . $message .  "</li>";
+      //$_SESSION['presets']['userInput'] = $userinput;
+      $dao->addMessage($userid, 0, $message);
+      if($isAJAX){
+        $newMessages[] = array(0, $message);
+      }
+    }
+
+
+  }
+} else if (in_array('findinfo', $_SESSION['presets']) AND $_SESSION['presets']['findinfo']) {
+  file_put_contents('../peeps_finder_in.txt', $userinput . PHP_EOL, FILE_APPEND);
+
+} else if ($findinfo) {
+  file_put_contents('../peeps_finder_in.txt', "START" . PHP_EOL, FILE_APPEND);
+  $_SESSION['presets']['findinfo'] = True;
+
+} else if ($help) {
   $adding = "<li class=\"message response\"> <h1>Creating</h1>To create a new contact follow this format: @name #attribute description #attribute2 description2 ...<br>
   You can add as many attributes or values as you like. Remember that attributes must be all one word.
   <br> For example, try writing '@Peeps #likes yellow marshmallows' </li>";
@@ -74,7 +135,6 @@ if ($help) {
     $newMessages[] = array(0, $adding);
     $newMessages[] = array(0, $search);
   }
-
 } else if(!$question) {
   // check if correct
   if (sizeof($keys) != sizeof($values) or sizeof($keys) < 1){
