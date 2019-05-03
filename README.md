@@ -5,6 +5,7 @@ A chat bot to help you remember the people you meet and expand your professional
 1. Install [WAMP](http://www.wampserver.com/en/)
 2. Set up a MySQL Database in any method of your choosing and change the corresponding parameters in the file `classes/dao.php` (the data access object class) to access your database
 3. Set up your WAMP server by following the [getting started guide](http://www.wampserver.com/en/2011/11/15/start-with-wampserver/) and start the server on your localhost.
+4. Open a browser such as Chrome and navigate to `http://localhost`. If you set up WAMP correctly, you should see the landing page for Peeps. 
 
 # Using the Peeps Finder
 To use the Peeps Finder to automatically find information about a contact from the internet, you will need to clone a [separate repository](https://github.com/danielemoro/PeepsFinder) and run the python script "server.py" at the same time as this web server is running. The two processes will communicate using the files `peeps_finder_in.txt` and `peeps_finder_out.txt`.
